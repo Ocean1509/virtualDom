@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Virtual Dom</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="vd.js"></script>
+  <script>
+    console.log(vn)
+    
+    
+    // 创建Vnode
+    let createVnode = function() {
+      let _c = vn.createVnode;
+      return _c('div', { attr: { id: 'test' } }, [_c('span', {}, 'content'), _c('span', {}, 'content2')])
+    }
+    // Vnode=>真实DOM
+    let vnode = createVnode();
+
+    vn.createElement(vnode, {
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
