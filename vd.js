@@ -132,7 +132,7 @@
       let newEndIndex = newCh.length - 1;
       let oldEndIndex = oldCh.length - 1;
       let oldKeyToId;
-
+      let idxInOld;
       let newStartVnode = newCh[newStartIndex];
       let oldStartVnode = oldCh[oldStartIndex];
       let newEndVnode = newCh[newEndIndex];
@@ -160,7 +160,13 @@
           newStartVnode = newCh[++newStartIndex];
         } else {
           if (!oldKeyToId) oldKeyToId = this.createKeyMap(oldCh, oldStartIndex, oldEndIndex);
-          util._isDef(newStartVnode.key) ? oldKeyToId[newStartVnode.key] : this.findIdxFromVnode(newCh, )
+          idxInOld = util._isDef(newStartVnode.key) ? oldKeyToId[newStartVnode.key] : this.findIdxInOld(newStartVnode, oldCh, start, end);
+          if(!idxInOld) {
+            this.createElm()
+          } else {
+            
+          }
+
         }
       }
       if(oldEndIndex <= oldStartIndex) {
@@ -183,7 +189,12 @@
       return map;
     }
 
-    findIdxFromVnode()
+    findIdxInOld(newStartVnode, oldCh, start, end) {
+      for (var i = start; i < end; i++) {
+        var c = oldCh[i];
+        if (_.isDef(c) && _.sameVnode(newStartVnode, c)) { return i }
+      }
+    }
   }
   
 
