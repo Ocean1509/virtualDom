@@ -8,22 +8,65 @@
 </head>
 <body>
   <div id="app"></div>
+  <!-- <div id="test"><li>sss</li></div> -->
   <script src="vd.js"></script>
   <script>
-    console.log(vn)
-    
-    
-    // 创建Vnode
+    let arr = [{
+      tag: 'span',
+      text: 1
+    },{
+      tag: 'strong',
+      text: 2
+    },{
+      tag: 'i',
+      text: 3
+    },{
+      tag: 'i',
+      text: 4
+    }]
+    let preVnode;
+
+    let newVnode;
+
+
+    //创建Vnode
     let createVnode = function() {
       let _c = vn.createVnode;
-      return _c('div', { attr: { id: 'test' } }, [_c('span', {}, 'content'), _c('span', {}, 'content2')])
+      return _c('div', { attrs: { id: 'test' } }, arr.map(a => _c(a.tag, {}, a.text)))
     }
     // Vnode=>真实DOM
-    let vnode = createVnode();
-
-    vn.createElement(vnode, {
+    preVnode = createVnode();
+    vn.createElement(preVnode, {
       el: '#app'
     })
+
+    // 定时五秒arr数组增加一，重新创建Vnode并比较
+
+    setTimeout(function() {
+      arr = [{
+        tag: 'i',
+        text: 2
+      }, {
+        tag: 'span',
+        text: 3
+      }, {
+        tag: 'strong',
+        text: 4
+      }]
+      newVnode = createVnode();
+      vn.diffVnode(newVnode, preVnode);
+      // let createVnode = function () {
+      //   let _c = vn.createVnode;
+      //   return _c('div', { attrs: { id: 'test' } }, arr.map(a => _c(a.tag, {}, a.text)))
+      // }
+      // // Vnode=>真实DOM
+      // preVnode = createVnode();
+      // document.getElementById('app').removeChild(document.getElementById('test'))
+      // vn.createElement(preVnode, {
+      //   el: '#app'
+      // })
+    }, 2000);
+
   </script>
 </body>
 </html>
